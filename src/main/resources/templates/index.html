@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
+    <title>Title</title>
+    <style>
+        body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: right;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+    </style>
+</head>
+<body>
+
+
+
+<div class="navbar">
+    <a href="/contact">Contact</a>
+    <a href="#home">Login</a>
+    <a href="#home">Safety</a>
+    <a href="/airports/page/1">Airports</a>
+    <a href="/">Home</a>
+
+</div>
+
+<!--<form th:action="@{/}">-->
+<!--    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />-->
+<!--    &nbsp;-->
+<!--    <input type="submit" value="Search" />-->
+<!--    &nbsp;-->
+<!--</form>-->
+
+<table class="table_airports">
+    <thead>
+    <th>Airport</th> <!-- heading for each column -->
+    <th>Country</th>
+    <th>City</th>
+    <th>Code</th>
+    </thead>
+    <tbody>
+    <tr th:each="a : ${airports}"> <!-- table row -->
+
+        <td>
+            <a th:href="@{select/id/} + ${a.id}" th:text="${a.name}"></a>
+
+        </td> <!-- table data -->
+        <td th:text="${a.country}"></td>
+        <td th:text="${a.city}"></td>
+        <td th:text="${a.iata}"></td>
+        <td th:text="${a.id}"></td>
+    </tr>
+    </tbody>
+</table>
+Total Items: [[${totalItems}]]
+<a th:if="${currentPage > 1}" th:href="@{'/page/1'}">First</a>
+<span th:unless="${currentPage > 1}">First</span>
+<a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1}}">Previous</a>
+<span th:unless="${currentPage > 1}">Previous</span>
+<span th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}">
+    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+</span>
+<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+<span th:unless="${currentPage < totalPages}">Next</span>
+<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+<span th:unless="${currentPage < totalPages}">Last</span>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
+    <style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background:url(../images/background.jpg) no-repeat center center fixed;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: right;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: right;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="/contact">Contact</a>
+    <a href="#home">Login</a>
+    <a href="#home">Safety</a>
+    <a href="/page/1">Airports</a>
+    <div class="dropdown">
+        <button class="dropbtn">Flights
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#">Departures</a>
+            <a href="#">Arrivals</a>
+
+        </div>
+    </div>
+    <a href="/">Home</a>
+
+</div>
+
+
+<p> Salut, aeroportul selectat este:</p><p th:text="${airportName}"></p>
+<p> Orasul in care este situat:</p><p th:text="${airportCity}"></p>
+<p> Aeroportul este din:</p><p th:text="${airportCountry}"></p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact</title>
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a href="/contact">Contact</a>
+    <a href="/login">Login</a>
+    <a href="#home">Safety</a>
+    <a href="/page/1">Airports</a>
+    <a href="/page/1">Home</a>
+
+</div>
+<div class="container">
+    <form th:action="@{/post_message}" method="post" th:object="${message}">
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="well well-sm">
+                    <fieldset>
+                        <legend class="text-center">Contact</legend>
+
+                        <!-- Name input-->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="name">Name</label>
+                            <div class="col-md-9">
+                            <input id="name" type="text" class="form-control" name="name" th:field="*{name}"/>
+                            </div>
+                        </div>
+
+                        <!-- Email input-->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="email">Email</label>
+                            <div class="col-md-9">
+                            <input id="email" type="email" class="form-control" name="email" th:field="*{email}"/>
+                            </div>
+                        </div>
+
+                        <!-- Message body -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="message">Message</label>
+                            <div class="col-md-9">
+                            <textarea id="message" class="form-control" name="message" rows="5" cols="50"
+                                      th:field="*{text}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 text-center">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Submit">
+                        <input type="reset" class="btn btn-primary btn-lg" value="Reset">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
