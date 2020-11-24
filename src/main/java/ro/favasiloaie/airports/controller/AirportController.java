@@ -28,48 +28,33 @@ public class AirportController {
     @Autowired
     private AirportRepository airportRepository;
 
-    @RequestMapping("/page/{pageNum}")
+
+
+    @GetMapping("airports/{pageNum}")
     public String viewPage(Model model,
-                           @PathVariable(name = "pageNum") int pageNum) {
-        Page<Airport> page = airportService.listAll(pageNum);
+                           @PathVariable(name = "pageNum") int pageNum,
+                           @Param("sortField") String sortField,
+                           @Param("sortDir") String sortDir)
+                       {
+
+        Page<Airport> page = airportService.listAll(pageNum, sortField, sortDir);
 
         List<Airport> airports = page.getContent();
 
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("totalElements", page.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("airports", airports);
 
-        return "index";
+        return "pagination";
     }
 
-    @RequestMapping("/")
-    public String viewAirportsPage(Model model) {
-        return viewPage(model, 1);
+    @RequestMapping("/airports")
+    public String viewAirportsPage(final Model model) {
+        return viewPage(model, 1, "country", "asc");
     }
-
-//    @RequestMapping("/")
-//    public String viewHomePage(Model model, @Param("keyword") String keyword) {
-//        List<Airport> listAirports = airportService.findFilteredAirports(keyword);
-//        model.addAttribute("listAirports",listAirports);
-//        model.addAttribute("keyword", keyword);
-//        return "homepage";
-//    }
-//    @RequestMapping("/")
-//    public String displaySearchPage(Model model, @Param("keyword") String keyword) {
-//        List<Airport> listAirports = airportService.findFilteredAirports(keyword);
-//        model.addAttribute("listAirports", listAirports);
-//        model.addAttribute("keyword", keyword);
-//
-//        return "index";
-//    }
-//
-//    @PostMapping("/airports")
-//    public ModelAndView displaySearchResults(final Search search) {
-//        final ModelAndView modelAndView = new ModelAndView("homepage");
-//        final List<Airport> list = airportService.findFilteredAirports(search);
-//        modelAndView.addObject("myAirports", list);
-//        return modelAndView;
-//    }
 
 }

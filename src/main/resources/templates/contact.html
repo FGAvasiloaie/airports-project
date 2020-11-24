@@ -6,15 +6,17 @@
     <title>Contact</title>
     <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
 </head>
-<body>
-<div class="navbar">
-    <a href="/contact">Contact</a>
-    <a href="/login">Login</a>
-    <a href="#home">Safety</a>
-    <a href="/page/1">Airports</a>
-    <a href="/page/1">Home</a>
+<header>
+    <div class="navbar">
+        <a href="/contact">Contact</a>
+        <a href="/login">Login</a>
+        <a href="#home">Safety</a>
+        <a href="/airports/1">Airports</a>
+        <a href="/">Home</a>
 
-</div>
+    </div>
+</header>
+<body>
 <div class="container">
     <form th:action="@{/post_message}" method="post" th:object="${message}">
 

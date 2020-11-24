@@ -15,7 +15,7 @@ public class SelectAiportController {
     @Autowired
 private AirportRepository airportRepository;
 
-    @GetMapping("/page/select/id/{id}")
+    @GetMapping("/airports/select/id/{id}")
     public ModelAndView displayAirport(@PathVariable("id") final Long id) {
         final ModelAndView mav = new ModelAndView("selected");
         final Optional<Airport> airport = airportRepository.findById(id);

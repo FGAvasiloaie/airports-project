@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ro.favasiloaie.airports.model.Airport;
-import ro.favasiloaie.airports.model.Search;
 import ro.favasiloaie.airports.payload.AirportPayload;
 import ro.favasiloaie.airports.repository.AirportRepository;
 import ro.favasiloaie.airports.service.AirportService;
@@ -19,18 +19,13 @@ public class AirportServiceImpl implements AirportService {
     @Autowired
     private AirportRepository airportRepository;
 
-    @Override
-    public List<Airport> findFilteredAirports(final String keyword ) {
-        if(keyword != null) {
-            return airportRepository.search(keyword);
-        }
-        return airportRepository.findAll();
-    }
+//
 
     @Override
-    public Page<Airport> listAll(int pageNum) {
+    public Page<Airport> listAll(int pageNum, String sortField, String sortDir) {
         int pageSize = 25;
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
+                sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
         return airportRepository.findAll(pageable);
     }
 

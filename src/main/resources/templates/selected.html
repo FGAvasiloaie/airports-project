@@ -71,26 +71,27 @@ body {
 
     </style>
 </head>
-<body>
+<header>
+    <div class="navbar">
+        <a href="/contact">Contact</a>
+        <a href="#home">Login</a>
+        <a href="#home">Safety</a>
+        <a href="/airports/1">Airports</a>
+        <div class="dropdown">
+            <button class="dropbtn">Flights
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Departures</a>
+                <a href="#">Arrivals</a>
 
-<div class="navbar">
-    <a href="/contact">Contact</a>
-    <a href="#home">Login</a>
-    <a href="#home">Safety</a>
-    <a href="/page/1">Airports</a>
-    <div class="dropdown">
-        <button class="dropbtn">Flights
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="#">Departures</a>
-            <a href="#">Arrivals</a>
-
+            </div>
         </div>
-    </div>
-    <a href="/">Home</a>
+        <a href="/">Home</a>
 
-</div>
+    </div>
+</header>
+<body>
 
 
 <p> Salut, aeroportul selectat este:</p><p th:text="${airportName}"></p>

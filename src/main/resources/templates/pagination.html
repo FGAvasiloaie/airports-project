@@ -69,18 +69,16 @@
 }
     </style>
 </head>
-<body>
-
-
-
-<div class="navbar">
+<header>
+    <div class="navbar">
     <a href="/contact">Contact</a>
     <a href="#home">Login</a>
     <a href="#home">Safety</a>
-    <a href="/airports/page/1">Airports</a>
+    <a href="/airports//1">Airports</a>
     <a href="/">Home</a>
 
-</div>
+</div></header>
+<body>
 
 <!--<form th:action="@{/}">-->
 <!--    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />-->
@@ -91,10 +89,17 @@
 
 <table class="table_airports">
     <thead>
-    <th>Airport</th> <!-- heading for each column -->
-    <th>Country</th>
-    <th>City</th>
-    <th>Code</th>
+    <div><i>Sorted by [[${sortField}]] in [[${sortDir}]] order</i></div>
+    <th>
+        <a th:href="@{'/airports/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name</a>
+    </th>
+    <th>
+        <a th:href="@{'/airports/' + ${currentPage} + '?sortField=country&sortDir=' + ${reverseSortDir}}">Country</a>
+    </th>
+    <th>
+        <a th:href="@{'/airports/' + ${currentPage} + '?sortField=city&sortDir=' + ${reverseSortDir}}">City</a>
+    </th>
+
     </thead>
     <tbody>
     <tr th:each="a : ${airports}"> <!-- table row -->
@@ -105,24 +110,22 @@
         </td> <!-- table data -->
         <td th:text="${a.country}"></td>
         <td th:text="${a.city}"></td>
-        <td th:text="${a.iata}"></td>
-        <td th:text="${a.id}"></td>
     </tr>
     </tbody>
 </table>
-Total Items: [[${totalItems}]]
-<a th:if="${currentPage > 1}" th:href="@{'/page/1'}">First</a>
+Total Items: [[${totalElements}]]
+<a th:if="${currentPage > 1}" th:href="@{'/airports/1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
 <span th:unless="${currentPage > 1}">First</span>
-<a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1}}">Previous</a>
+<a th:if="${currentPage > 1}" th:href="@{'/airports/' + ${currentPage - 1}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
 <span th:unless="${currentPage > 1}">Previous</span>
 <span th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}">
-    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+    <a th:if="${currentPage != i}" th:href="@{'/airports/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
     <span th:unless="${currentPage != i}">[[${i}]]</span>
     &nbsp;
 </span>
-<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+<a th:if="${currentPage < totalPages}" th:href="@{'/airports/' + ${currentPage + 1}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
 <span th:unless="${currentPage < totalPages}">Next</span>
-<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+<a th:if="${currentPage < totalPages}" th:href="@{'/airports/' + ${totalPages}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
 <span th:unless="${currentPage < totalPages}">Last</span>
 </body>
 </html>

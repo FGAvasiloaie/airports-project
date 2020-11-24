@@ -10,9 +10,7 @@ import java.util.List;
 
 public interface AirportService {
 
-    List<Airport> findFilteredAirports(String keyword);
-
-    Page<Airport> listAll(int pageNum);
+    Page<Airport> listAll(int pageNum, String sortField, String sortDir);
 
     Airport createAirport(String name);
 

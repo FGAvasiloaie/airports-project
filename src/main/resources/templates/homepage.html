@@ -53,7 +53,7 @@
 <span th:unless="${currentPage > 1}">Previous</span>
 <div class="col-sm-1">
    <span th:each="i: ${#numbers.sequence(currentPage + 1, currentPage + 3)}">
-    <a th:if="${currentPage != i}" th:href="@{'/airports/page/' + ${i}}">[[${i}]]</a>
+    <a th:if="${currentPage != i}" th:href="@{'/airports/' + ${i}}">[[${i}]]</a>
     <span th:unless="${currentPage != i}">[[${i}]]</span>
     &nbsp;
 </span>
