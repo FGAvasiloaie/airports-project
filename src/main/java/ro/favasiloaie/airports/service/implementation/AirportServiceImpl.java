@@ -22,12 +22,16 @@ public class AirportServiceImpl implements AirportService {
 //
 
     @Override
-    public Page<Airport> listAll(int pageNum, String sortField, String sortDir) {
+    public Page<Airport> listAll(int pageNum, String sortField, String sortDir, String keyword) {
         int pageSize = 25;
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-        return airportRepository.findAll(pageable);
+        if( keyword == null) {
+            return airportRepository.findAll(pageable);
+        }
+        return airportRepository.findAll(keyword, pageable);
     }
+
 
     @Override
     public Airport createAirport(final String name) {

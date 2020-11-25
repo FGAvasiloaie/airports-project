@@ -1,6 +1,7 @@
 package ro.favasiloaie.airports.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,19 +16,21 @@ public class SelectAiportController {
     @Autowired
 private AirportRepository airportRepository;
 
-    @GetMapping("/airports/select/id/{id}")
-    public ModelAndView displayAirport(@PathVariable("id") final Long id) {
+    @GetMapping("/select")
+    public ModelAndView displayAirport(@Param("id")  Long id) {
         final ModelAndView mav = new ModelAndView("selected");
         final Optional<Airport> airport = airportRepository.findById(id);
         final String aiportName = airport.map(a -> a.getName()).orElse("Without name!");
         final String airportCountry = airport.map(a -> a.getCountry()).orElse("Without Country!");
         final Integer airportAltitude = airport.map(a -> a.getAltitude()).orElse(0);
         final String airportCity = airport.map(a -> a.getCity()).orElse("Nu avem Oras");
+        id = airport.map(a -> a.getId()).orElse(null);
 
         mav.addObject("airportName", aiportName);
         mav.addObject("airportCountry", airportCountry);
         mav.addObject("airportAltitude", airportAltitude);
         mav.addObject("airportCity", airportCity);
+        mav.addObject("id", id);
         return mav;
     }
 }

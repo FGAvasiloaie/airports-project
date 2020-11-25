@@ -74,30 +74,38 @@
     <a href="/contact">Contact</a>
     <a href="#home">Login</a>
     <a href="#home">Safety</a>
-    <a href="/airports//1">Airports</a>
+    <a href="/airports">Airports</a>
     <a href="/">Home</a>
 
 </div></header>
 <body>
 
-<!--<form th:action="@{/}">-->
+
+<!--<form th:action="@{/airports/1}">-->
 <!--    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />-->
 <!--    &nbsp;-->
 <!--    <input type="submit" value="Search" />-->
 <!--    &nbsp;-->
 <!--</form>-->
-
+<form th:action="@{/airports}">
+    <input type="hidden" name="sortField" th:value="${sortField}" />
+    <input type="hidden" name="sortDir" th:value="${sortDir}" />
+    <input type="text" name="keyword" id="keyword" size="50"  th:value="${keyword}" required/>
+    &nbsp;
+    <input type="submit" value="Search" />
+    &nbsp;
+</form>
 <table class="table_airports">
     <thead>
     <div><i>Sorted by [[${sortField}]] in [[${sortDir}]] order</i></div>
     <th>
-        <a th:href="@{'/airports/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name</a>
+        <a th:href="@{'/airports/?pageNum=' + ${currentPage} + '&sortField=name&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Name</a>
     </th>
     <th>
-        <a th:href="@{'/airports/' + ${currentPage} + '?sortField=country&sortDir=' + ${reverseSortDir}}">Country</a>
+        <a th:href="@{'/airports/?pageNum=' + ${currentPage} + '&sortField=country&sortDir=' + ${reverseSortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Country</a>
     </th>
     <th>
-        <a th:href="@{'/airports/' + ${currentPage} + '?sortField=city&sortDir=' + ${reverseSortDir}}">City</a>
+        <a th:href="@{'/airports/?pageNum=' + ${currentPage} + '&sortField=city&sortDir=' + ${reverseSortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">City</a>
     </th>
 
     </thead>
@@ -105,7 +113,7 @@
     <tr th:each="a : ${airports}"> <!-- table row -->
 
         <td>
-            <a th:href="@{select/id/} + ${a.id}" th:text="${a.name}"></a>
+            <a th:href="@{'/select/?id=' + ${a.id}}"  th:text="${a.name}"></a>
 
         </td> <!-- table data -->
         <td th:text="${a.country}"></td>
@@ -114,18 +122,18 @@
     </tbody>
 </table>
 Total Items: [[${totalElements}]]
-<a th:if="${currentPage > 1}" th:href="@{'/airports/1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+<a th:if="${currentPage > 1}" th:href="@{'/airports/?pageNum=' + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">First</a>
 <span th:unless="${currentPage > 1}">First</span>
-<a th:if="${currentPage > 1}" th:href="@{'/airports/' + ${currentPage - 1}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+<a th:if="${currentPage > 1}" th:href="@{'/airports/?pageNum=' + ${currentPage - 1}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Previous</a>
 <span th:unless="${currentPage > 1}">Previous</span>
 <span th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}">
-    <a th:if="${currentPage != i}" th:href="@{'/airports/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+    <a th:if="${currentPage != i}" th:href="@{'/airports/' + ${i} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${i}]]</a>
     <span th:unless="${currentPage != i}">[[${i}]]</span>
     &nbsp;
 </span>
-<a th:if="${currentPage < totalPages}" th:href="@{'/airports/' + ${currentPage + 1}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+<a th:if="${currentPage < totalPages}" th:href="@{'/airports/?pageNum=' + ${currentPage + 1}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Next</a>
 <span th:unless="${currentPage < totalPages}">Next</span>
-<a th:if="${currentPage < totalPages}" th:href="@{'/airports/' + ${totalPages}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+<a th:if="${currentPage < totalPages}" th:href="@{'/airports/?pageNum=' + ${totalPages}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last</a>
 <span th:unless="${currentPage < totalPages}">Last</span>
 </body>
 </html>

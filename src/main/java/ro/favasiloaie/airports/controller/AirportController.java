@@ -5,16 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 import ro.favasiloaie.airports.model.Airport;
-import ro.favasiloaie.airports.model.Search;
 import ro.favasiloaie.airports.repository.AirportRepository;
 import ro.favasiloaie.airports.service.AirportService;
-import ro.favasiloaie.airports.service.MessageService;
+
 
 import java.util.List;
 
@@ -29,15 +24,27 @@ public class AirportController {
     private AirportRepository airportRepository;
 
 
-
-    @GetMapping("airports/{pageNum}")
+    @GetMapping("/airports")
     public String viewPage(Model model,
-                           @PathVariable(name = "pageNum") int pageNum,
+                           @Param("pageNum") Integer pageNum,
                            @Param("sortField") String sortField,
-                           @Param("sortDir") String sortDir)
-                       {
+                           @Param("sortDir") String sortDir,
+                           @Param("keyword") String keyword) {
+        // dam valori default parametrilor de request care nu vin cu "valoare" din request
+        if (pageNum == null || pageNum.intValue() == 0) {
+            pageNum = 1;
+        }
+        if (sortField == null || "".equals(sortField.trim())) {
+            sortField = "id";
+        }
+        if (sortDir == null || "".equals(sortDir.trim())) {
+            sortDir = "asc";
+        }
+        if (keyword == null) {
+            keyword = "";
+        }
 
-        Page<Airport> page = airportService.listAll(pageNum, sortField, sortDir);
+        Page<Airport> page = airportService.listAll(pageNum, sortField, sortDir, keyword);
 
         List<Airport> airports = page.getContent();
 
@@ -47,14 +54,11 @@ public class AirportController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("keyword", keyword);
         model.addAttribute("airports", airports);
 
-        return "pagination";
-    }
 
-    @RequestMapping("/airports")
-    public String viewAirportsPage(final Model model) {
-        return viewPage(model, 1, "country", "asc");
+        return "pagination";
     }
 
 }
