@@ -2,7 +2,6 @@ package ro.favasiloaie.airports.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,10 +9,7 @@ import ro.favasiloaie.airports.model.Flight;
 import ro.favasiloaie.airports.repository.FlightRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 public class FlightController {

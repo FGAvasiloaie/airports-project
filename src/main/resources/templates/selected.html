@@ -76,6 +76,7 @@ body {
         <a href="/contact">Contact</a>
         <a href="#home">Login</a>
         <a href="#home">Safety</a>
+        <a href="/airlines">Airlines</a>
         <a href="/airports">Airports</a>
         <div class="dropdown">
             <button class="dropbtn">Flights
@@ -97,6 +98,10 @@ body {
 <p> Salut, aeroportul selectat este:</p><p th:text="${airportName}"></p>
 <p> Orasul in care este situat:</p><p th:text="${airportCity}"></p>
 <p> Aeroportul este din:</p><p th:text="${airportCountry}"></p>
+<p1> <iframe style="width: 700px; height: 410px" th:src="@{'https://maps.google.com/maps?q=' +
+  ${airportLatitude} + ',' +
+  ${airportLongitude} + '&output=embed'}">
+</iframe></p1>
 
 
 

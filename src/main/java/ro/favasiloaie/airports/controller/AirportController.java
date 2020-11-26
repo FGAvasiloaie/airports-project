@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ro.favasiloaie.airports.model.Airport;
-import ro.favasiloaie.airports.repository.AirportRepository;
 import ro.favasiloaie.airports.service.AirportService;
 
 
@@ -19,10 +18,6 @@ public class AirportController {
 
     @Autowired
     private AirportService airportService;
-
-    @Autowired
-    private AirportRepository airportRepository;
-
 
     @GetMapping("/airports")
     public String viewPage(Model model,
@@ -58,7 +53,8 @@ public class AirportController {
         model.addAttribute("airports", airports);
 
 
-        return "pagination";
+        return "airports";
     }
+
 
 }
