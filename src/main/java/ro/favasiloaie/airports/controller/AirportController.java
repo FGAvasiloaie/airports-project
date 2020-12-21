@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import ro.favasiloaie.airports.model.Airport;
 import ro.favasiloaie.airports.service.AirportService;
 
@@ -55,6 +56,5 @@ public class AirportController {
 
         return "airports";
     }
-
 
 }

@@ -2,13 +2,16 @@ package ro.favasiloaie.airports.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import ro.favasiloaie.airports.model.Airline;
+import ro.favasiloaie.airports.model.Airport;
 import ro.favasiloaie.airports.model.Flight;
+import ro.favasiloaie.airports.repository.AirlineRepository;
+import ro.favasiloaie.airports.repository.AirportRepository;
 import ro.favasiloaie.airports.repository.FlightRepository;
+import ro.favasiloaie.airports.service.FlightService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -16,28 +19,29 @@ public class FlightController {
 
     @Autowired
     private FlightRepository flightRepository;
+    @Autowired
+    private AirportRepository airportRepository;
+    @Autowired
+    private AirlineRepository airlineRepository;
+    @Autowired
+    private FlightService flightService;
 
-    @GetMapping("/flights/{flightNo}")
-    public ModelAndView displayFlightByNumber(@PathVariable("flightNo") final String flightNo) {
-        final ModelAndView mav = new ModelAndView("flight-by-number");
-        final List<Flight> flights = flightRepository.findByFlightNo(flightNo);
-        final String flight = flights.stream()
-                .findFirst()
-                .map(f -> f.getAirline().getName() + " " + f.getAirline().getIata()
-                        + "\n" + f.getDepartureAirport().getName() + " " + f.getDepartureAirport().getCountry()
-                        + "\n" + f.getArrivalAirport().getName() + " " + f.getArrivalAirport().getCity())
-                .orElse("no data");
-        mav.addObject("flight", flight);
-        return mav;
+
+    @PostMapping("/add")
+    public String displayResult(final Model model, @ModelAttribute final Flight myFlight) {
+        flightService.insertIntoDatabase(myFlight);
+        final List<Flight> flights = flightRepository.findAll();
+        model.addAttribute("flights", flights);
+        return "add-flight";
     }
 
-    @GetMapping("/flights/city/{city}/date/{date}")
-    public ModelAndView displayFilteredFlights(@PathVariable("city") final String city,
-                                               @PathVariable("date") final String date) {
-        final ModelAndView mav = new ModelAndView("filtered-flights");
-        final List<Flight> flights = flightRepository
-                .findFlightsByCustomRules(LocalDateTime.parse(date), city);
-        mav.addObject("flights", flights);
-        return mav;
+    @GetMapping({"/add"})
+    public String addFlight(final Model model) {
+        final List<Airport> airports = airportRepository.findAll();
+        final List<Airline> airlines = airlineRepository.findAll();
+        model.addAttribute("myAirports", airports);
+        model.addAttribute("myAirlines", airlines);
+        model.addAttribute("flight", new Flight());
+        return "add-flight";
     }
 }

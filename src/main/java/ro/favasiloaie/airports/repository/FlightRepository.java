@@ -1,24 +1,18 @@
 package ro.favasiloaie.airports.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ro.favasiloaie.airports.model.Airport;
 import ro.favasiloaie.airports.model.Flight;
 
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
-    List<Flight> findByFlightNo(String flightNo);
+    Optional<ArrayList<Flight>> findByDepartureAirport(Airport departure);
 
-
-    @Query("select f from Flight f inner join f.departureAirport a " +
-            "where f.departure >= :departureDate " +
-            "and a.city = :departureCity")
-    List<Flight> findFlightsByCustomRules(@Param("departureDate") LocalDateTime departureDate,
-                                          @Param("departureCity") String departureCity);
+    Optional<ArrayList<Flight>> findByArrivalAirport(Airport arrival);
 }

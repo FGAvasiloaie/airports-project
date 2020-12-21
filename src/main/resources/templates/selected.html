@@ -74,21 +74,13 @@ body {
 <header>
     <div class="navbar">
         <a href="/contact">Contact</a>
-        <a href="#home">Login</a>
-        <a href="#home">Safety</a>
+        <a href="/login">Login</a>
+        <a href="/add">Add Flight</a>
         <a href="/airlines">Airlines</a>
         <a href="/airports">Airports</a>
-        <div class="dropdown">
-            <button class="dropbtn">Flights
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="#">Departures</a>
-                <a href="#">Arrivals</a>
-
-            </div>
-        </div>
         <a href="/">Home</a>
+
+    </div>
 
     </div>
 </header>
@@ -98,12 +90,56 @@ body {
 <p> Salut, aeroportul selectat este:</p><p th:text="${airportName}"></p>
 <p> Orasul in care este situat:</p><p th:text="${airportCity}"></p>
 <p> Aeroportul este din:</p><p th:text="${airportCountry}"></p>
-<p1> <iframe style="width: 700px; height: 410px" th:src="@{'https://maps.google.com/maps?q=' +
+<p1> <iframe style="width: 500px; height: 300px" th:src="@{'https://maps.google.com/maps?q=' +
   ${airportLatitude} + ',' +
   ${airportLongitude} + '&output=embed'}">
 </iframe></p1>
-
-
+<div>
+    <h3>Departures</h3>
+</div>
+<table>
+    <thead>
+    <th>Departure Airport</th> <!-- heading for each column -->
+    <th>Departure Time</th>
+    <th>Arrival Airport</th>
+    <th>Arrival Time</th>
+    <th>Flight No</th>
+    <th>Airline</th>
+    </thead>
+    <tbody>
+    <tr th:each="a : ${departureFlights}"> <!-- table row -->
+        <td th:text="${a.departureAirport.getName()}"></td>
+        <td th:text="${a.departure}"></td><!-- table data -->
+        <td th:text="${a.arrivalAirport.getName()}"></td>
+        <td th:text="${a.arrival}"></td>
+        <td th:text="${a.flightNo}"></td>
+        <td th:text="${a.airline.getName()}"></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <h3>Arrivals</h3>
+</div>
+<table class="table table-hover table-sm">
+    <thead>
+    <th>Arrival Airport</th>
+    <th>Arrival Time</th>
+    <th>Departure Airport</th> <!-- heading for each column -->
+    <th>Departure Time</th>
+    <th>Flight No</th>
+    <th>Airline</th>
+    </thead>
+    <tbody>
+    <tr th:each="a : ${arrivalFlights}"> <!-- table row -->
+        <td th:text="${a.arrivalAirport.getName()}"></td>
+        <td th:text="${a.arrival}"></td>
+        <td th:text="${a.departureAirport.getName()}"></td>
+        <td th:text="${a.departure}"></td><!-- table data -->
+        <td th:text="${a.flightNo}"></td>
+        <td th:text="${a.airline.getName()}"></td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>
