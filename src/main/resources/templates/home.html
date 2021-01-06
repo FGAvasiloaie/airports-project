@@ -1,27 +1,77 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="../static/css/home.css" type="text/css" media="all" th:href="@{css/home.css}">
-    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
+    <link rel="stylesheet" href="/../static/css/home.css" type="text/css" media="all" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <header>
-    <div class="navbar">
-        <a href="/contact">Contact</a>
-        <a href="/login">Login</a>
-        <a href="/add">Add Flight</a>
-        <a href="/airlines">Airlines</a>
-        <a href="/airports">Airports</a>
-        <a href="/">Home</a>
-
-    </div>
+    <div th:replace="fragments/header :: header"></div>
 </header>
 <body>
-<div class="under_contruction">
-    <p1> Page under reconstruction, please be patient!</p1>
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/airports">Airports</a>
+    <a href="/airlines">Airlines</a>
+    <a href="/contact">Contact</a>
+    <a href="/login" class="right">Login</a>
+</div>
+
+<div class="main">
+    <h2>#### Concepte cu care lucreaza aplicatia</h2>
+
+    <p> - aeroporturi listate in aplicatia noastra </p>
+    <p>   - companii aeriene </p>
+    <p>    - zborurile, care au aeroport de plecare si aeroport de sosire; fiecare zbor are o companie aeriana asociata </p>
+    <br>
+
+    <h2>#### Home page si Search page</h2>
+
+    <p>    - aplicatia permite "gestiunea" mai multor aeroporturi </p>
+    <p>    - pe home page vom permite selectia unui aeroport (fie dintr-un dropdown, fie prin alta modalitate) </p>
+    <p>    - o data ce am selectat un aeroport, suntem redirectati intr-o noua pagina, in care gasim informatii despre aeroport </p>
+    <p>    - e.g. nume, orasul, tara </p>
+    <p>    - adresa si localizare pe harta (optional; Google Maps, OpenStreetMap, MapBox) </p>
+    <p>    - pentru aeroportul selectat, by default trebuie sa afisam pe aceeasi pagina o selectie cu urmatoarele 10 zboruri din ziua curenta </p>
+    <p>    - tinem cont de ora curenta </p>
+    <p>    - afisam intr-o sectiune urmatoarele "arrivals" si intr-o alta sectiune urmatoarele "departures" </p>
+    <p>    - vom avea o pagina de cautare, in care, pentru aeroportul selectat putem cautam toate zborurile dintr-un interval de zile </p>
+    <p>    - in plus, daca selectam in formularul de cautare si o linie aeriana, afisam doar zborurile acelei companii </p>
+    <p>    - avem si un grup de radio buttons in care selectam daca vrem sosirile sau plecari </p>
+    <br>
+
+    <h2>#### Administration page</h2>
+
+    <p>    - in header-ul paginii "home" trebuie sa avem un link "Login" </p>
+    <p>    - atunci cand administratorul se autentifica, va avea acces la pagina de administrare a aplicatiei </p>
+    <p>    - linkul de login va disparea si va aparea un link de logout </p>
+    <p>    - in stanga linkului de logout va aparea un link "Administration" </p>
+    <p>    - cand se acceseaza linkul de admin, se afiseaza pagina ce ne permite sa adaugam/editam/stergem de date despre zboruri </p>
+    <p>    - in pagina, vom avea un buton "Add", care ne duce intr-o noua pagina; pagina va fi un formular, prin care introducem un nou zbor </p>
+    <p>    - zborul contine urmatoarele date: aeroport de plecare, aeroport de sosire (le poate selecta din lista de aeroporturi gestionata de aplicatia noastra), data si ora de plecare, data si ora de sosire, compania aeriana, numar zbor etc. </p>
+    <p>    - tabela flights </p>
+    <p>    - id long PK </p>
+    <p>    - flightno string </p>
+    <p>    - departure datetime </p>
+    <p>   - arrival datetime </p>
+    <p>    - departure_airport FK (foreign key; legatura la id-ul tabelei airports) </p>
+    <p>  - arrival_airport FK (foreign key; legatura la id-ul tabelei airports) </p>
+    <p>   - airline FK (foreign key catre tabela airlines) </p>
+    <p>  - datele despre zboruri sunt afisate sub forma tabelara in pagina administrare (pentru inceput, fara paginare) </p>
+    <p>  - pentru fiecare rand in parte trebuie sa putem face actiuni: edit sau delete </p>
+    <p>  - atunci cand apasam linkul "edit", avem un zbor selectat => mergem intr-o noua pagina, in care avem un formular </p>
+    <p>  precompletat cu datele acelui zbor; si putem modifica datele; apoi putem da Save si datele se actualizeaza in DB; apoi facem "refresh" paginii </p>
+    <p>  - la "delete" stergem zborul si facem "refresh" paginii (o accesam din nou) </p>
+
+
 </div>
 </body>
+
+<footer>
+    <div th:replace="fragments/footer :: footer"> </div>
+</footer>
+
 </html>
+

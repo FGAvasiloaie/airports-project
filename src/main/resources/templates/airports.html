@@ -2,103 +2,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
-    <title>Title</title>
-    <style>
-        body {
-    font-family: Arial, Helvetica, sans-serif;
-}
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.navbar a {
-  float: right;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
-
-.dropdown .dropbtn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
-
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-    </style>
+    <link rel="stylesheet" href="/../static/css/style.css" type="text/css" media="all" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Airports</title>
 </head>
+
 <header>
-    <div class="navbar">
-        <a href="/contact">Contact</a>
-        <a href="/login">Login</a>
-        <a href="/add">Add Flight</a>
-        <a href="/airlines">Airlines</a>
-        <a href="/airports">Airports</a>
-        <a href="/">Home</a>
-
-    </div>
-
+    <div th:replace="fragments/header :: header"></div>
 </header>
 <body>
 
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/airports">Airports</a>
+    <a href="/airlines">Airlines</a>
+    <a href="/contact">Contact</a>
+    <a href="/login" class="right">Login</a>
+</div>
 
-<!--<form th:action="@{/airports/1}">-->
-<!--    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />-->
-<!--    &nbsp;-->
-<!--    <input type="submit" value="Search" />-->
-<!--    &nbsp;-->
-<!--</form>-->
-<form th:action="@{/airports}">
-    <input type="hidden" name="sortField" th:value="${sortField}" />
-    <input type="hidden" name="sortDir" th:value="${sortDir}" />
-    <input type="text" name="keyword" id="keyword" size="50"  th:value="${keyword}" required/>
-    &nbsp;
-    <input type="submit" value="Search" />
-    &nbsp;
-</form>
-<table class="table_airports">
+<div class="main">
+    <form th:action="@{/airports}">
+        <input type="hidden" name="sortField" th:value="${sortField}"/>
+        <input type="hidden" name="sortDir" th:value="${sortDir}"/>
+        <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required/>
+        &nbsp;
+        <input type="submit" value="Search"/>
+    </form>
+</div> &nbsp;
+<table class="w3-table-all w3-card-4">
     <thead>
     <div><i>Sorted by [[${sortField}]] in [[${sortDir}]] order</i></div>
     <th>
@@ -116,7 +47,7 @@
     <tr th:each="a : ${airports}"> <!-- table row -->
 
         <td>
-            <a th:href="@{'/select/?id=' + ${a.id}}"  th:text="${a.name}"></a>
+            <a th:href="@{'/select/?id=' + ${a.id}}" th:text="${a.name}"></a>
 
         </td> <!-- table data -->
         <td th:text="${a.country}"></td>
@@ -125,18 +56,28 @@
     </tbody>
 </table>
 Total Items: [[${totalElements}]]
-<a th:if="${currentPage > 1}" th:href="@{'/airports/?pageNum=' + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">First</a>
+<a th:if="${currentPage > 1}"
+   th:href="@{'/airports/?pageNum=' + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">First</a>
 <span th:unless="${currentPage > 1}">First</span>
-<a th:if="${currentPage > 1}" th:href="@{'/airports/?pageNum=' + ${currentPage - 1}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Previous</a>
+<a th:if="${currentPage > 1}"
+   th:href="@{'/airports/?pageNum=' + ${currentPage - 1}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Previous</a>
 <span th:unless="${currentPage > 1}">Previous</span>
 <span th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}">
-    <a th:if="${currentPage != i}" th:href="@{'/airports/' + ${i} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${i}]]</a>
+    <a th:if="${currentPage != i}"
+       th:href="@{'/airports/?pageNum=' + ${i} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${i}]]</a>
     <span th:unless="${currentPage != i}">[[${i}]]</span>
     &nbsp;
 </span>
-<a th:if="${currentPage < totalPages}" th:href="@{'/airports/?pageNum=' + ${currentPage + 1}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Next</a>
+<a th:if="${currentPage < totalPages}"
+   th:href="@{'/airports/?pageNum=' + ${currentPage + 1}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Next</a>
 <span th:unless="${currentPage < totalPages}">Next</span>
-<a th:if="${currentPage < totalPages}" th:href="@{'/airports/?pageNum=' + ${totalPages}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last</a>
+<a th:if="${currentPage < totalPages}"
+   th:href="@{'/airports/?pageNum=' + ${totalPages}  + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last</a>
 <span th:unless="${currentPage < totalPages}">Last</span>
+
+
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
 </body>
 </html>

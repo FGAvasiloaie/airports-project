@@ -24,6 +24,7 @@ private AirportRepository airportRepository;
 
     @GetMapping("/select")
     public ModelAndView displayAirport(@Param("id")  Long id) {
+
         final ModelAndView mav = new ModelAndView("selected");
         final Optional<Airport> airport = airportRepository.findById(id);
         final String aiportName = airport.map(a -> a.getName()).orElse("Without name!");

@@ -2,102 +2,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
-    <style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background:url(../images/background.jpg) no-repeat center center fixed;
-}
+    <link rel="stylesheet" href="/../static/css/style.css" type="text/css" media="all" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Selected airport</title>
 
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.navbar a {
-  float: right;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.dropdown {
-  float: right;
-  overflow: hidden;
-}
-
-.dropdown .dropbtn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
-
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-    </style>
 </head>
 <header>
-    <div class="navbar">
-        <a href="/contact">Contact</a>
-        <a href="/login">Login</a>
-        <a href="/add">Add Flight</a>
-        <a href="/airlines">Airlines</a>
-        <a href="/airports">Airports</a>
-        <a href="/">Home</a>
-
-    </div>
-
-    </div>
+    <div th:replace="fragments/header :: header"></div>
 </header>
 <body>
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/airports">Airports</a>
+    <a href="/airlines">Airlines</a>
+    <a href="/contact">Contact</a>
+    <a href="/login" class="right">Login</a>
+</div>
 
+<div class="row">
+    <div class="side">
+        <h3> Salut, aeroportul selectat este:</h3>
+        <p th:text="${airportName}"></p>
+        <h3> Orasul in care este situat:</h3>
+        <p th:text="${airportCity}"></p>
+        <h3> Aeroportul este din:</h3>
+        <p th:text="${airportCountry}"></p>
+    </div>
 
-<p> Salut, aeroportul selectat este:</p><p th:text="${airportName}"></p>
-<p> Orasul in care este situat:</p><p th:text="${airportCity}"></p>
-<p> Aeroportul este din:</p><p th:text="${airportCountry}"></p>
-<p1> <iframe style="width: 500px; height: 300px" th:src="@{'https://maps.google.com/maps?q=' +
+    <div class="main">
+        <div class="google_map">
+            <h3>Harta</h3>
+            <iframe style="width: 500px; height: 300px" th:src="@{'https://maps.google.com/maps?q=' +
   ${airportLatitude} + ',' +
   ${airportLongitude} + '&output=embed'}">
-</iframe></p1>
+            </iframe>
+        </div>
+    </div>
+</div>
 <div>
     <h3>Departures</h3>
 </div>
-<table>
+<table class="w3-table-all w3-card-4">
     <thead>
     <th>Departure Airport</th> <!-- heading for each column -->
     <th>Departure Time</th>
@@ -120,7 +65,7 @@ body {
 <div>
     <h3>Arrivals</h3>
 </div>
-<table class="table table-hover table-sm">
+<table class="w3-table-all w3-card-4">
     <thead>
     <th>Arrival Airport</th>
     <th>Arrival Time</th>
@@ -140,6 +85,9 @@ body {
     </tr>
     </tbody>
 </table>
-
 </body>
+
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
 </html>

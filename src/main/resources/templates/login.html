@@ -7,76 +7,109 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- for responsive carousel and toggle nav menu-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <!-- Fonts and icons -->
-    <script src="https://kit.fontawesome.com/04daf65bfb.js" crossorigin="anonymous"></script>
-    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/../static/css/home.css" type="text/css" media="all" th:href="@{/css/home.css}">
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
 
-    <!-- Show password -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js">
-    </script>
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 20%;
+  border-radius: 25%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
 
 </head>
 <header>
-    <div class="navbar">
-        <a href="/contact">Contact</a>
-        <a href="/login">Login</a>
-        <a href="/add">Add Flight</a>
-        <a href="/airlines">Airlines</a>
-        <a href="/airports">Airports</a>
-        <a href="/">Home</a>
-
-    </div>
+    <div th:replace="fragments/header :: header"></div>
 </header>
 
 <body>
 
-<div class="container">
+<h2>Login Form</h2>
 
-    <div class="general-form">
-        <form th:action="@{/login}" method="POST">
-            <h2>Log In</h2>
-            <div class="form-group" th:if="${param.error}">
-                Invalid username and/or password.
-            </div>
-            <div class="form-group" th:if="${param.logout}">
-                You have been logged out successfully.
-            </div>
-            <div class="form-group" th:if="${message}">
-                <span th:text="${message}">Display this message.</span>
-            </div>
-
-            <div class="form-group">
-                <label for="username"> Username</label>
-                <input class="form-control" placeholder="E-mail address" id="username" name="username" type="text">
-            </div>
-
-            <div class="form-group">
-                <label for="password"> Password </label>
-                <input class="form-control" placeholder="Password" id="password" name="password" type="password" data-toggle="password"/>
-            </div>
-
-            <div>
-                <button class="btn btn-primary btn-block btn-lg btnform" type="submit">Log In</button>
-            </div>
-        </form>
-        <div class="text-center">
-            <a th:href="@{/reset-password}" href="reset-password.html">Forgot password?</a>
-        </div>
-        <div class="text-center">
-            Don't have an account? <a th:href="@{/register}" href="register-style.html">Sign up here</a>
-        </div>
-
+<form th:action="@{/login}" method="post">
+    <div class="imgcontainer">
+        <img src="/../images/img_avatar2.png" alt="Avatar" class="avatar">
     </div>
 
-</div>
+    <div class="container">
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" id="username" name="username" required>
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+        <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+        <button type="button" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+</form>
 
 </body>
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
 
 </html>

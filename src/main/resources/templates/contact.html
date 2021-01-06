@@ -4,64 +4,72 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Contact</title>
-    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" th:href="@{css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/../static/css/style.css" type="text/css" media="all" th:href="@{/css/home.css}">
+    <style>
+    .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+</style>
 </head>
 <header>
-    <div class="navbar">
-        <a href="/contact">Contact</a>
-        <a href="/login">Login</a>
-        <a href="/add">Add Flight</a>
-        <a href="/airlines">Airlines</a>
-        <a href="/airports">Airports</a>
-        <a href="/">Home</a>
-
-    </div>
+    <div th:replace="fragments/header :: header"></div>
 </header>
 <body>
+
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/airports">Airports</a>
+    <a href="/airlines">Airlines</a>
+    <a href="/contact">Contact</a>
+    <a href="/login" class="right">Login</a>
+</div>
+
 <div class="container">
-    <form th:action="@{/post_message}" method="post" th:object="${message}">
-
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="well well-sm">
-                    <fieldset>
-                        <legend class="text-center">Contact</legend>
-
+    <form th:action="@{/post_message}" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin" method="post" th:object="${message}">
+        <h2 class="w3-center">Contact Us</h2>
                         <!-- Name input-->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="name">Name</label>
-                            <div class="col-md-9">
-                            <input id="name" type="text" class="form-control" name="name" th:field="*{name}"/>
+                        <div class="w3-row w3-section">
+                            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i>
+                            </div>
+                            <div class="w3-rest">
+                            <input id="name" type="text" placeholder="Name" class="w3-input w3-border" name="name" th:field="*{name}"/>
                             </div>
                         </div>
 
-                        <!-- Email input-->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="email">Email</label>
-                            <div class="col-md-9">
-                            <input id="email" type="email" class="form-control" name="email" th:field="*{email}"/>
+                        <div class="w3-row w3-section">
+                            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i>
+                            </div>
+                            <div class="w3-rest">
+                            <input id="email" type="email" placeholder="Email" class="w3-input w3-border" name="email" th:field="*{email}"/>
                             </div>
                         </div>
 
-                        <!-- Message body -->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="message">Message</label>
-                            <div class="col-md-9">
-                            <textarea id="message" class="form-control" name="message" rows="5" cols="50"
+                        <div class="w3-row w3-section">
+                            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i>
+                            </div>
+                            <div class="w3-rest">
+                            <textarea id="message" placeholder="Message" class="w3-input w3-border" name="message" rows="5" cols="50"
                                       th:field="*{text}"></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <div class="main">
                             <div class="col-md-12 text-center">
-                        <input type="submit" class="btn btn-primary btn-lg" value="Submit">
-                        <input type="reset" class="btn btn-primary btn-lg" value="Reset">
+                        <input type="submit" class="w3-btn w3-teal" value="Submit">
+                        <input type="reset" class="w3-btn w3-teal" value="Reset">
                             </div>
                         </div>
-                    </fieldset>
-                </div>
-            </div>
-        </div>
+
+
     </form>
 </div>
 </body>
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
 </html>
